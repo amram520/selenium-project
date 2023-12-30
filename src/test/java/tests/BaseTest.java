@@ -54,7 +54,6 @@ public class BaseTest {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         Date date = new Date();
         String d = formatter.format(date);
-        System.out.println("לח");
         recorder = new ATUTestRecorder("C:\\Users\\Daniel A\\Desktop\\seleniumProject\\src\\test\\resources\\reports","mewLogin"+d,false);
         String path = System.getProperty("user.dir");
         System.setProperty("webdriver.chrome.driver", path+"\\src\\test\\resources\\driver\\chromedriver.exe");
