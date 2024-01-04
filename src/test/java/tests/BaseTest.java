@@ -6,6 +6,7 @@ import atu.testrecorder.exceptions.ATUTestRecorderException;
 import com.github.agomezmoron.multimedia.recorder.VideoRecorder;
 import com.github.agomezmoron.multimedia.recorder.configuration.VideoRecorderConfiguration;
 import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -33,10 +34,15 @@ public class BaseTest {
     WebDriverWait wait;
     Properties properties;
 
-    ExtentReports reports;
+    ExtentReports report;
+    ExtentTest test;
+
 
     @BeforeTest
-    public void BTest() {
+    public void BTest() throws ATUTestRecorderException {
+
+            report = new ExtentReports(System.getProperty("user.dir")+"\\src\\test\\resources\\ExtentReports");
+            test = report.startTest("ExtentDemo");
         try {
             properties = new Properties();
             FileInputStream ip = new FileInputStream("C:\\Users\\Daniel A\\IdeaProjects\\seleniumProject\\src\\test" +
@@ -46,11 +52,6 @@ public class BaseTest {
         catch (Exception e){
             e.printStackTrace();
         }
-
-    }
-
-    @Test
-    public void setUp() throws ATUTestRecorderException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         Date date = new Date();
         String d = formatter.format(date);
@@ -58,16 +59,13 @@ public class BaseTest {
         String path = System.getProperty("user.dir");
         System.setProperty("webdriver.chrome.driver", path+"\\src\\test\\resources\\driver\\chromedriver.exe");
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.get(properties.getProperty("url"));
         driver.manage().window().maximize();
         recorder.start();
-       WebElement element = driver.findElement(By.xpath("//input[@id = 'suggestion-search']"));
-       element.sendKeys("spiderman");
-       element.sendKeys(Keys.ENTER);
-
     }
+    
 
     @AfterTest
     public void quit() throws ATUTestRecorderException, MalformedURLException {

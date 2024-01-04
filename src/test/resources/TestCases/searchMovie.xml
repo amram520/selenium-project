@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<suite name ="IMDB">
+    <listeners>
+        <listener class-name="listeners.TestNGListeners"/>
+    </listeners>
+    <test name = "searchMovieTest">
+        <parameter name="typeOfMoviesOptions" value="Top 250 Movies"/>
+        <classes>
+<class name ="tests.loginTest"/>
+        </classes>
+    </test>
+</suite>
