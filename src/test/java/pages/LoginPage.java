@@ -9,15 +9,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import tests.BaseTest;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginPage {
+public class LoginPage extends BaseTest{
 
-    WebDriver driver;
-    WebDriverWait wait;
     WebElement element;
 
     @FindBy(xpath = "//input[@id = 'suggestion-search']")
@@ -31,17 +31,17 @@ public class LoginPage {
     @FindBy(xpath = "//a[@class = 'ipc-list__item nav-link sc-gXfWyg ggHJvJ ipc-list__item--indent-one']")
     List<WebElement>listOptions;
 
-    @FindBy(xpath = "//span[@class = 'ipc-rating-star ipc-rating-star--base ipc-rating-star--imdb sc-9ab53865-1 iXEijC ratingGroup--imdb-rating']")
+    @FindBy(xpath = "//span[@class = 'ipc-rating-star ipc-rating-star--base ipc-rating-star--imdb ratingGroup--imdb-rating']")
     List<WebElement>ratesList;
 
-    public LoginPage(WebDriver driver, WebDriverWait wait){
-        this.driver = driver;
-        this.wait = wait;
-        PageFactory.initElements(driver, this);
+    public LoginPage(){
+        PageFactory.initElements(driver,this);
     }
-     public void searchMovie(String movie){
+     public void searchMovie(String movie) throws IOException {
        wait.until(ExpectedConditions.visibilityOf(searchBox)).sendKeys(movie);
+//       Assert.assertEquals(true,false);
         searchBox.sendKeys(Keys.ENTER);
+
      }
 
      public void chooseNavBar(String typeOptionOfMovies){
@@ -51,7 +51,6 @@ public class LoginPage {
          Matcher m1, m2;
          Pattern p;
         wait.until(ExpectedConditions.elementToBeClickable(navBar)).click();
-//        listOptionsNavBar.get(0).click();
         switch (typeOptionOfMovies){
             case "Release Calendar":
                 listOptions.get(0).click();
@@ -60,8 +59,8 @@ public class LoginPage {
             case "Top 250 Movies":
                 wait.until(ExpectedConditions.elementToBeClickable(listOptions.get(1))).click();
                 wait.until(ExpectedConditions.visibilityOfAllElements(ratesList));
-                while(isHigher && i < 249) {
-                    for ( i = 0; i < ratesList.size() - 1; i++) {
+                while(isHigher && i < 98) {
+                    for ( i = 0; i < 99; i++) {
                          p = Pattern.compile("\\d+\\.\\d+");
                          m1 = p.matcher(ratesList.get(i).getAttribute("aria-label"));
                          m2 = p.matcher(ratesList.get(i+1).getAttribute("aria-label"));
