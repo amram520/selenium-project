@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<suite name ="imdbTest">
+<suite name ="IMDB">
     <listeners>
         <listener class-name="listeners.TestNGListeners"/>
         <!--        <listener class-name="atu.testng.reports.listeners.ATUReportsListener"/>-->
         <!--        <listener class-name="atu.testng.reports.listeners.ConfigurationListener"/>-->
         <!--        <listener class-name="atu.testng.reports.listeners.MethodListener"/>-->
     </listeners>
-    <test name = "LoginTest">
+    <test name = "searchMovieTest">
         <parameter name="typeOfMoviesOptions" value="Top 250 Movies"/>
         <classes>
             <class name ="tests.loginTest"/>
