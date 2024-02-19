@@ -19,15 +19,18 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class TestNGListeners extends BaseTest implements ITestListener {
+    int a = 1;
 ExtentReports reportsManager = ExtentReportsManager.createInstance();
 ExtentTest test;
     ExtentTest test1;
 
 @Override
     public void onTestStart(ITestResult result) {
-        System.out.println("the test is" + result.getName());
-        test1 = reportsManager.createTest(Feature.class,"imdb").assignCategory("regression");
-       test = test1.createNode(result.getName()+" Test");
+
+        System.out.println("the test is" +a+ " "+ result.getName());
+        test1 = reportsManager.createTest(Feature.class,"imdb"+a).assignCategory("regression");
+       test = test1.createNode(result.getName()+a+" Test");
+       a++;
 
 
 }

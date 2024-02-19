@@ -24,7 +24,7 @@ public class ExtentReportsManager {
    public static ExtentReports createInstance() {
        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(path + "\\src\\test\\resources\\ExtentReports\\eli.html");
        reports = new ExtentReports();
-//       reports.setSystemInfo("Browser", "firefox");
+       reports.setSystemInfo("Browser", "firefox");
        reports.setSystemInfo("environment", "test");
        htmlReporter.setAppendExisting(true);
        reports.attachReporter(htmlReporter);
