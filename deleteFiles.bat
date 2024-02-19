@@ -1,6 +1,6 @@
 @echo off
 set extentReportsPath=C:\Users\Daniel A\Desktop\seleniumProject\src\test\resources\ExtentReports
-set videosPath=C:\Users\Daniel A\Desktop\seleniumProject\src\test\resources\reports
+set videosPath=C:\Users\Daniel A\Desktop\seleniumProject\src\test\resources\videos
 set /p folderPath="enter which folder you want to delete videos or extentReports: "
 if %folderPath%==videos (
 ForFiles /p "%videosPath%" /s /d -0 /c "cmd /c del /q @file"

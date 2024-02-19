@@ -64,7 +64,7 @@ public class BaseTest {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
         Date date = new Date();
         String d = formatter.format(date);
-        recorder = new ATUTestRecorder("C:\\Users\\Daniel A\\Desktop\\seleniumProject\\src\\test\\resources\\reports","mewLogin"+d,false);
+        recorder = new ATUTestRecorder("C:\\Users\\Daniel A\\Desktop\\seleniumProject\\src\\test\\resources\\videos","mewLogin"+d,false);
 //        System.setProperty("webdriver.chrome.driver", path+"\\src\\test\\resources\\driver\\chromedriver.exe");
 //        ChromeOptions options = new ChromeOptions();
 //        options.addArguments("--headless");

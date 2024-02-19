@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-
-<suite name ="IMDB">
-    <test name = "searchMovieTest">
-        <classes>
-            <class name ="BaseTest.demoTest"/>
-        </classes>
-    </test>
-</suite>
