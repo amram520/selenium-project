@@ -7,8 +7,9 @@
         <!--        <listener class-name="atu.testng.reports.listeners.ConfigurationListener"/>-->
         <!--        <listener class-name="atu.testng.reports.listeners.MethodListener"/>-->
     </listeners>
-    <test name = "searchMovieTest">
+    <test name = "searchMovieTest111">
         <parameter name="typeOfMoviesOptions" value="Top 250 Movies"/>
+        <parameter name="browser" value="fireFox"/>
         <classes>
             <class name ="tests.loginTest"/>
         </classes>

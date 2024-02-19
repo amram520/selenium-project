@@ -9,6 +9,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.testng.annotations.Parameters;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class ExtentReportsManager {
    public static ExtentReports createInstance() {
        ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(path + "\\src\\test\\resources\\ExtentReports\\eli.html");
        reports = new ExtentReports();
-       reports.setSystemInfo("Browser", "chrome");
+       reports.setSystemInfo("Browser", "firefox");
        reports.setSystemInfo("environment", "test");
        htmlReporter.setAppendExisting(true);
        reports.attachReporter(htmlReporter);

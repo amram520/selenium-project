@@ -16,16 +16,18 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.support.ThreadGuard;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,33 +43,19 @@ import java.util.Properties;
 public class BaseTest {
 
     ATUTestRecorder recorder;
-    public static WebDriver driver;
+    public static ThreadLocal<WebDriver> driver= new ThreadLocal<>();
     public static WebDriverWait wait;
     Properties properties;
-//    ExtentReports reports;
-//
-//    ExtentHtmlReporter htmlReporter;
-//    public ExtentTest test;
-//    ExtentSparkReporter extentSparkReporter;
-//    {
-//        System.setProperty("atu.reporter.config", "C:\\Users\\Daniel A\\Desktop\\seleniumProject\\src\\test\\resources\\cofigFiles\\atu.properties");
-//    }
 
 
    static String path = System.getProperty("user.dir");
 
-    @BeforeTest
-    public void BTest() throws ATUTestRecorderException, IOException {
-//        htmlReporter = new ExtentHtmlReporter(path+"\\src\\test\\resources\\ExtentReports\\eli.html");
-//        reports = new ExtentReports();
-//        reports.setSystemInfo("Browser", "chrome");
-//        htmlReporter.setAppendExisting(true);
-//        reports.attachReporter(htmlReporter);
-//        test= reports.createTest("imdb tests");
+    @BeforeMethod
+    @Parameters({"browser"})
+    public void BTest(@Optional("chrome") String browser) throws ATUTestRecorderException, IOException {
         try {
             properties = new Properties();
-            FileInputStream ip = new FileInputStream("C:\\Users\\Daniel A\\IdeaProjects\\seleniumProject\\src\\test" +
-                    "\\resources\\cofigFiles\\config.properties");
+            FileInputStream ip = new FileInputStream("C:\\Users\\Daniel A\\Desktop\\seleniumProject\\src\\test\\resources\\logs\\config.properties");
             properties.load(ip);
         }
         catch (Exception e){
@@ -77,34 +65,35 @@ public class BaseTest {
         Date date = new Date();
         String d = formatter.format(date);
         recorder = new ATUTestRecorder("C:\\Users\\Daniel A\\Desktop\\seleniumProject\\src\\test\\resources\\reports","mewLogin"+d,false);
-        System.setProperty("webdriver.chrome.driver", path+"\\src\\test\\resources\\driver\\chromedriver.exe");
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get(properties.getProperty("url"));
-        driver.manage().window().maximize();
+//        System.setProperty("webdriver.chrome.driver", path+"\\src\\test\\resources\\driver\\chromedriver.exe");
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--headless");
+        switch (browser){
+            case "chrome":
+                WebDriverManager.chromedriver().setup();
+                driver.set(ThreadGuard.protect(new ChromeDriver()));
+                break;
+            case "fireFox":
+                WebDriverManager.firefoxdriver().setup();
+                driver.set(ThreadGuard.protect(new FirefoxDriver()));
 
-//        test.log(Status.INFO,"starting");
-//        test.pass("navigate");
-//        test.log(Status.PASS,"secc", MediaEntityBuilder.createScreenCaptureFromPath(capture(driver,d)).build());
+        }
+        wait = new WebDriverWait(driver.get(), Duration.ofSeconds(10));
+        driver.get().get(properties.getProperty("url"));
+        driver.get().manage().window().maximize();
         recorder.start();
     }
-//        public static String capture(WebDriver driver, String screenShotName) throws IOException {
-//        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-//        File Dest = new File(path+"\\src\\test\\resources\\ExtentReports\\" + screenShotName+ ".png");
-//            String errflpath = Dest.getAbsolutePath();
-//            FileUtils.copyFile(scrFile,Dest);
-//        System.out.println("####    "+errflpath);
-//        return screenShotName+".png";
-//
-//    }
+
+public void loadProperties(){
+
+}
 
 
-
-    @AfterTest
+    @AfterMethod
     public void quit() throws ATUTestRecorderException, MalformedURLException {
-        driver.quit();
+        driver.get().quit();
+        driver.remove();
         recorder.stop();
         System.out.println("this is after test");
-//        reports.flush();
     }
 }

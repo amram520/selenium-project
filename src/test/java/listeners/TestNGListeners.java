@@ -11,6 +11,7 @@ import com.aventstack.extentreports.gherkin.model.Scenario;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.Parameters;
 import tests.BaseTest;
 
 import java.io.File;
@@ -34,7 +35,7 @@ ExtentTest test;
     public void onTestSuccess(ITestResult result) {
         System.out.println("the test" + result.getName() + "succeed");
         try {
-            test.log(Status.PASS,"pass", MediaEntityBuilder.createScreenCaptureFromPath(ExtentReportsManager.capture(driver)).build());
+            test.log(Status.PASS,"pass", MediaEntityBuilder.createScreenCaptureFromPath(ExtentReportsManager.capture(driver.get())).build());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +45,7 @@ ExtentTest test;
     System.out.println("the test" + result.getName() + "failed");
     String exceptionMsg = Arrays.toString(result.getThrowable().getStackTrace());
         try {
-            test.log(Status.FAIL,exceptionMsg, MediaEntityBuilder.createScreenCaptureFromPath(ExtentReportsManager.capture(driver)).build());
+            test.log(Status.FAIL,exceptionMsg, MediaEntityBuilder.createScreenCaptureFromPath(ExtentReportsManager.capture(driver.get())).build());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -52,7 +53,7 @@ ExtentTest test;
     @Override
     public void onTestSkipped(ITestResult result) {
         try {
-            test.log(Status.SKIP,result.getName()+" is skip", MediaEntityBuilder.createScreenCaptureFromPath(ExtentReportsManager.capture(driver)).build());
+            test.log(Status.SKIP,result.getName()+" is skip", MediaEntityBuilder.createScreenCaptureFromPath(ExtentReportsManager.capture(driver.get())).build());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

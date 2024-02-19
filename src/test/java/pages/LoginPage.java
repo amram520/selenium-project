@@ -1,18 +1,20 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.google.common.base.Function;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import tests.BaseTest;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +26,8 @@ public class LoginPage extends BaseTest{
     WebElement searchBox;
     @FindBy(id = "home_img")
     WebElement IMDBButton;
+    @FindBy(xpath = "//h1[text()='Search \"spiderman\"']")
+    WebElement title;
     @FindBy(id ="imdbHeader-navDrawerOpen")
     WebElement navBar;
     @FindBy(xpath = "//span[@class = 'navlinkcat__targetWrapper']")
@@ -35,13 +39,13 @@ public class LoginPage extends BaseTest{
     List<WebElement>ratesList;
 
     public LoginPage(){
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver.get(),this);
     }
      public void searchMovie(String movie) throws IOException {
        wait.until(ExpectedConditions.visibilityOf(searchBox)).sendKeys(movie);
 //       Assert.assertEquals(true,false);
         searchBox.sendKeys(Keys.ENTER);
-
+wait.until(ExpectedConditions.visibilityOf(title));
      }
 
      public void chooseNavBar(String typeOptionOfMovies){
@@ -57,6 +61,11 @@ public class LoginPage extends BaseTest{
 
                 break;
             case "Top 250 Movies":
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 wait.until(ExpectedConditions.elementToBeClickable(listOptions.get(1))).click();
                 wait.until(ExpectedConditions.visibilityOfAllElements(ratesList));
                 while(isHigher && i < 98) {
@@ -73,6 +82,7 @@ public class LoginPage extends BaseTest{
                         }
                         else {
                             isHigher = true;
+
                         }
 
                     }
