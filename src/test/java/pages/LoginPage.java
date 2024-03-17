@@ -40,6 +40,7 @@ public class LoginPage extends BaseTest{
         PageFactory.initElements(driver.get(),this);
     }
      public void searchMovie(String movie) throws IOException {
+        System.out.println("jjjjj");
          customSoftAssert softAssert = new customSoftAssert();
          softAssert.assertEquals(signInButton.isDisplayed(), true);
          softAssert.assertEquals(homeButton.isDisplayed(), true);
