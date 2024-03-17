@@ -1,20 +1,15 @@
 package pages;
 
-import com.google.common.base.Function;
+import Utilities.customSoftAssert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import tests.BaseTest;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,23 +24,30 @@ public class LoginPage extends BaseTest{
     @FindBy(xpath = "//h1[text()='Search \"spiderman\"']")
     WebElement title;
     @FindBy(id ="imdbHeader-navDrawerOpen")
-    WebElement navBar;
+    WebElement menuButton;
     @FindBy(xpath = "//span[@class = 'navlinkcat__targetWrapper']")
     List<WebElement>listOptionsNavBar;
     @FindBy(xpath = "//a[@class = 'ipc-list__item nav-link sc-gXfWyg ggHJvJ ipc-list__item--indent-one']")
     List<WebElement>listOptions;
-
     @FindBy(xpath = "//span[@class = 'ipc-rating-star ipc-rating-star--base ipc-rating-star--imdb ratingGroup--imdb-rating']")
     List<WebElement>ratesList;
+    @FindBy(id = "home_img")
+    WebElement homeButton;
+    @FindBy(linkText = "Sign In")
+    WebElement signInButton;
 
     public LoginPage(){
         PageFactory.initElements(driver.get(),this);
     }
      public void searchMovie(String movie) throws IOException {
+         customSoftAssert softAssert = new customSoftAssert();
+         softAssert.assertEquals(signInButton.isDisplayed(), true);
+         softAssert.assertEquals(homeButton.isDisplayed(), true);
+
        wait.until(ExpectedConditions.visibilityOf(searchBox)).sendKeys(movie);
-//       Assert.assertEquals(true,false);
         searchBox.sendKeys(Keys.ENTER);
-wait.until(ExpectedConditions.visibilityOf(title));
+       wait.until(ExpectedConditions.visibilityOf(title));
+         softAssert.assertAll();
      }
 
      public void chooseNavBar(String typeOptionOfMovies){
@@ -54,7 +56,7 @@ wait.until(ExpectedConditions.visibilityOf(title));
          int i =0;
          Matcher m1, m2;
          Pattern p;
-        wait.until(ExpectedConditions.elementToBeClickable(navBar)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(menuButton)).click();
         switch (typeOptionOfMovies){
             case "Release Calendar":
                 listOptions.get(0).click();

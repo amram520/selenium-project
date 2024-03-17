@@ -21,7 +21,7 @@ import java.util.Arrays;
 public class TestNGListeners extends BaseTest implements ITestListener {
     int a = 1;
 ExtentReports reportsManager = ExtentReportsManager.createInstance();
-ExtentTest test;
+public static ExtentTest test;
     ExtentTest test1;
 
 @Override

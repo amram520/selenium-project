@@ -18,9 +18,9 @@ public class shopLandingTest extends baTest {
     public void printHandling() throws AWTException {
     JavascriptExecutor js = (JavascriptExecutor)driver;
     js.executeScript("setTimeout(function() { window.print(); }, 0);");
-    Set<String>wind = driver.getWindowHandles();
-    System.out.println(wind);
-    Iterator<String>iterator = wind.iterator();
+    Set<String>windows = driver.getWindowHandles();
+    System.out.println(windows);
+    Iterator<String>iterator = windows.iterator();
     String parent = iterator.next();
     String child = iterator.next();
     driver.switchTo().window(child);
