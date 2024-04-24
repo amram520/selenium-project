@@ -9,7 +9,7 @@
     </listeners>
     <test name = "searchMovieTest111">
         <parameter name="typeOfMoviesOptions" value="Top 250 Movies"/>
-        <parameter name="browser" value="fireFox"/>
+        <parameter name="browser" value="chrome"/>
         <classes>
             <class name ="tests.loginTest"/>
         </classes>

@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 import pages.LoginPage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class loginTest extends BaseTest{
@@ -24,9 +25,10 @@ public class loginTest extends BaseTest{
 
     @Test
     @Parameters({"typeOfMoviesOptions"})
-    public void checkin(String typeOfMoviesOptions) throws IOException {
+    public void checkin(String typeOfMoviesOptions) throws IOException, SQLException {
         loginPage = new LoginPage();
         loginPage.searchMovie("spiderman");
-        loginPage.chooseNavBar(typeOfMoviesOptions);
+//        loginPage.chooseNavBar(typeOfMoviesOptions);
+        loginPage.getDataBySql();
     }
 }

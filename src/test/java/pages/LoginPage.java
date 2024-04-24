@@ -9,6 +9,7 @@ import org.testng.Assert;
 import tests.BaseTest;
 
 import java.io.IOException;
+import java.sql.*;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -95,10 +96,17 @@ public class LoginPage extends BaseTest{
         }
 
 
-
-
-
      }
 
+    public void getDataBySql() throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/student", "postgres", "124312");
+        statement = connection.createStatement();
+       ResultSet resultSet = statement.executeQuery("SELECT name FROM students WHERE id = 1");
+        while(resultSet.next()){
+            System.out.println(resultSet.getString(1));
 
+        }
+    }
 }
