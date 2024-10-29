@@ -8,6 +8,7 @@ public class demoTest {
 
     @BeforeTest
     public void print1(){
+        System.out.println("kkk");
         System.out.println("this 2");
     }
 
